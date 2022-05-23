@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.Cells.Cell;
 import Model.Model;
+import Model.Board;
 
 public abstract class Controller {
 
@@ -12,6 +14,8 @@ public abstract class Controller {
 
     public abstract int input_playerNo();
     public abstract boolean input_isMove();
-    public abstract String input_command();
+    public abstract String input_command(int movableCnt, Cell curCell);
+
+
 
 }

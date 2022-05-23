@@ -9,9 +9,18 @@ public class Cell {
 
     protected ArrayList<Piece> pieces;
     private Position position;
+    private char type;
 
-    public Cell(){
+    public char getBackDirection() {
+        return backDirection;
+    }
+
+    private char backDirection;
+
+    public Cell(char backDirection, char type){
         pieces = new ArrayList<>();
+        this.backDirection = backDirection;
+        this.type = type;
     }
 //
 //    public void pass(Piece piece){

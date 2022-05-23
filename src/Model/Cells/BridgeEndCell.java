@@ -1,11 +1,14 @@
 package Model.Cells;
 
+import Model.Piece;
+
 public class BridgeEndCell extends Cell implements Arriving {
 
+    public BridgeEndCell(char backDirection, char type) {
+        super(backDirection, type);
+    }
+
     @Override
-    public void arrive() {
-        for(int i=0; i<pieces.size(); i++){
-            pieces.get(i).getPlayer().setEnd(true);
-        }
+    public void arrive(Piece piece) {
     }
 }

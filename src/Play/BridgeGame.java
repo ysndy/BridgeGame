@@ -35,7 +35,7 @@ public class BridgeGame {
         //플레이어 숫자 세팅
         Player[] players = new Player[controller.input_playerNo()];
         for(int i=0; i<players.length; i++){
-            players[i] = new Player(i+"");
+            players[i] = new Player(i);
         }
         model.setPlayers(players);
 
@@ -60,31 +60,23 @@ public class BridgeGame {
 
                 if (controller.input_isMove()) {
 
-                    //움직임
-                    /*
-                    1. 주사위 굴림
-                    2. 이동가능 횟수 출력
-                    3. 이동 경로 입력
-                    4. 이동
-                     */
-
                     //1. 주사위 굴림
                     Die die = new Die();
                     die.roll();
                     view.print_die(die.getFaceValue());
 
+                    int movableCnt = die.getFaceValue()-player.getBridgeCardCnt();
                     //2. 이동가능 횟수 출력
-                    view.print_moveableNum(die.getFaceValue()-player.getBridgeCardCnt());
+                    view.print_movableCnt(movableCnt);
 
                     //3. 이동 경로 입력
-                    String command = controller.input_command();
+                    Board board = model.getBoard();
+                    Piece piece = player.getPiece();
+                    Cell cell = board.getPieceCell(piece);
+                    String command = controller.input_command(movableCnt, cell);
 
                     //4. 이동
                     char[] chars = command.toCharArray();
-                    Board board = model.getBoard();
-                    Piece piece = player.getPiece();
-
-                    Cell cell = board.getPieceCell(piece);
                     cell.leave(piece);
 
                     for(char c:chars){
@@ -98,10 +90,11 @@ public class BridgeGame {
 
                         }
 
-                        if(cell instanceof Passing) ((Passing) cell).pass();
+                        if(cell instanceof Passing) ((Passing) cell).pass(piece);
 
                     }
 
+                    //5. 도착
                     cell.arrive(piece);
 
                 } else {
@@ -119,7 +112,12 @@ public class BridgeGame {
     }
 
     public static void main(String[] args) {
-        BridgeGame bridgeGame = new BridgeGame();
+       // BridgeGame bridgeGame = new BridgeGame();
+        System.out.println("**********");
+        System.out.println("*1 2**   *");
+        System.out.println("start*   *");
+        System.out.println("*3 4**   *");
+        System.out.println("**********");
     }
 
 }

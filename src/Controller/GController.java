@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Cells.Cell;
 import Model.Model;
 
 public class GController extends Controller{
@@ -19,7 +20,7 @@ public class GController extends Controller{
     }
 
     @Override
-    public String input_command() {
+    public String input_command(int movableCnt, Cell curCell) {
         return null;
     }
 }
