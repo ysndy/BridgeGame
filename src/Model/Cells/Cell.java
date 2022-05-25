@@ -9,6 +9,11 @@ public class Cell {
 
     protected ArrayList<Piece> pieces;
     private Position position;
+
+    public char getType() {
+        return type;
+    }
+
     private char type;
 
     public char getBackDirection() {

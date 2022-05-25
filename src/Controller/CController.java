@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class CController extends Controller{
 
@@ -18,12 +19,32 @@ public class CController extends Controller{
 
     @Override
     public int input_playerNo() {
-        return 0;
+        System.out.println("플레이어 숫자를 입력하세요");
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            return Integer.parseInt(br.readLine());
+
+        }catch (IOException e){
+            return 0;
+        }
     }
 
     @Override
-    public boolean input_isMove() {
-        return false;
+    public boolean input_isMove(int number) {
+
+        while(true){
+            System.out.println(number+"플레이어의 차례입니다.\n쉬실려면 'S', 계속하시려면 'G'를 눌러주세요");
+
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String command = br.readLine();
+                if(command.charAt(0)=='S') return false;
+                if(command.charAt(0)=='G') return true;
+
+            }catch (IOException e){
+            }
+
+        }
     }
 
     @Override
@@ -32,9 +53,9 @@ public class CController extends Controller{
         while(true){
 
             try {
+                System.out.println("명령어를 입력해주세요");
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 String command = br.readLine();
-                System.out.println("명령어를 다시 입력해주세요");
                 if(input_command_check(movableCnt, command, curCell)) return command;
 
             }catch (IOException e){
@@ -53,11 +74,17 @@ public class CController extends Controller{
     private boolean input_command_check(int movableCnt, String command, Cell cell){
 
         //입력 값 맞는지 검사
-        char[] inputable = {'u', 'd', 'r', 'l', 'U', 'D', 'R', 'L'};
-        ArrayList arrayList = new ArrayList(Collections.singleton(inputable));
-        if(command.length()!=movableCnt) return false;
+        Character[] inputable = {'u', 'd', 'r', 'l', 'U', 'D', 'R', 'L'};
+        ArrayList arrayList = new ArrayList(List.of(inputable));
+        if(command.length()!=movableCnt) {
+            System.out.println("명령어 길이 불일치");
+            return false;
+        }
         for(int i=0; i<command.length(); i++){
-            if(!arrayList.contains(command.charAt(i))) return false;
+            if(!arrayList.contains(command.charAt(i))) {
+                System.out.println("명령어 유효성 검사 오류");
+                return false;
+            }
         }
 
         //이동 가능한지 검사
@@ -66,7 +93,10 @@ public class CController extends Controller{
             char c = command.charAt(i);
 
             //뒤로 이동 불가모드일 경우
-            if(model.isBackMode()&&(cell.getBackDirection()==c)) return false;
+            if(model.isBackMode()&&(cell.getBackDirection()==c)) {
+                System.out.println("뒤로 이동 불가모드");
+                return false;
+            }
 
             switch (c) {
                 case 'u':
@@ -82,7 +112,11 @@ public class CController extends Controller{
                 case 'R':
                     cell = board.getRightCell(cell); break;
             }
-            if(cell.equals(null)) return false;
+            if(cell==null) {
+                System.out.println("i="+i+", c="+c+", 이동 가능 셀 없음");
+
+                return false;
+            }
 
         }
 

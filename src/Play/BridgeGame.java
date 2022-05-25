@@ -3,6 +3,7 @@ package Play;
 import Controller.CController;
 import Controller.Controller;
 import Model.Cells.Cell;
+import Model.Cells.On;
 import Model.Cells.Passing;
 import Model.Model;
 import Model.Player;
@@ -30,7 +31,7 @@ public class BridgeGame {
     private void init(){
         model = new Model();
         controller = new CController(model);
-        view = new View();
+        view = new View(model);
 
         //플레이어 숫자 세팅
         Player[] players = new Player[controller.input_playerNo()];
@@ -45,6 +46,9 @@ public class BridgeGame {
             startCell.arrive(players[i].getPiece());
         }
 
+        //맵출력
+        view.print_map();
+
     }
 
     private void play(){
@@ -58,7 +62,7 @@ public class BridgeGame {
 
                 Player player = activePlayers.get(i);
 
-                if (controller.input_isMove()) {
+                if (controller.input_isMove(player.getNumber())) {
 
                     //1. 주사위 굴림
                     Die die = new Die();
@@ -96,12 +100,17 @@ public class BridgeGame {
 
                     //5. 도착
                     cell.arrive(piece);
+                    if(cell instanceof On) ((On) cell).on(piece);
 
                 } else {
 
                     player.removeBridge();
 
                 }
+
+                view.print_map();
+                view.print_item(activePlayers);
+                //플레이어의 아이템 개수 출력
 
             }
         }while(activePlayers.size()>0);
@@ -112,12 +121,8 @@ public class BridgeGame {
     }
 
     public static void main(String[] args) {
-       // BridgeGame bridgeGame = new BridgeGame();
-        System.out.println("**********");
-        System.out.println("*1 2**   *");
-        System.out.println("start*   *");
-        System.out.println("*3 4**   *");
-        System.out.println("**********");
+       BridgeGame bridgeGame = new BridgeGame();
+
     }
 
 }

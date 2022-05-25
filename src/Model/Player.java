@@ -9,6 +9,17 @@ public class Player {
     private boolean isEnd;
     private Piece piece;
     private int bridgeCardCnt;
+    private int score;
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    private int rank;
 
     public Card[] getCards() {
         return cards;
@@ -20,6 +31,7 @@ public class Player {
         isEnd = false;
         piece = new Piece(this);
         bridgeCardCnt = 0;
+        score = 0;
         cards = new Card[Data.CARDNAME.length];
         for(int i = 0; i< Data.CARDNAME.length; i++){
             cards[i] = new Card(Data.CARDNAME[i], Data.CARDSCORE[i]);
@@ -37,8 +49,12 @@ public class Player {
         isEnd = end;
     }
 
+    public void addScore(int score){
+        this.score+=score;
+    }
+
     public int getScore(){
-        return 0;
+        return score;
     }
 
     public Piece getPiece(){

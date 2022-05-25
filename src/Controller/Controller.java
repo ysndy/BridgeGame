@@ -13,7 +13,7 @@ public abstract class Controller {
     }
 
     public abstract int input_playerNo();
-    public abstract boolean input_isMove();
+    public abstract boolean input_isMove(int number);
     public abstract String input_command(int movableCnt, Cell curCell);
 
 

@@ -15,7 +15,7 @@ public class GController extends Controller{
     }
 
     @Override
-    public boolean input_isMove() {
+    public boolean input_isMove(int number) {
         return false;
     }
 

@@ -46,7 +46,7 @@ public class Board {
                     case 'H': cell = new ToolCell(new Card("Hammer", 2), getBack(str), getType(str)); break;
                     case 'S': cell = new ToolCell(new Card("Saw", 3), getBack(str), getType(str)); break;
                     case 'P': cell = new ToolCell(new Card("Philips Driver", 1), getBack(str), getType(str)); break;
-                    case 'E': cell = new EndCell(getBack(str), getType(str)); break;
+                    case 'E': cell = new EndCell('.', getType(str)); break;
 
                 }
 
@@ -88,7 +88,7 @@ public class Board {
 
                 for(int j=0; j<board.get(i).size();j++){
                     this.map[i][j] = board.get(i).get(j);
-                    board.get(i).get(j).setPosition(new Position(i, j));
+                    if(this.map[i][j]!=null) this.map[i][j].setPosition(new Position(j, i));
                 }
 
             }
@@ -154,6 +154,7 @@ public class Board {
 
     public Cell getRightCell(Cell cell){
         try {
+            System.out.println("y="+cell.getPosition().getY()+", x="+cell.getPosition().getX() + 1);
             return map[cell.getPosition().getY()][cell.getPosition().getX() + 1];
         }catch (ArrayIndexOutOfBoundsException e){
             return null;
