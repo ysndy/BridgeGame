@@ -8,6 +8,7 @@ public class Model extends Observable {
 
     private Board board;
     private Player[] players;
+    private boolean backMode;
 
     public boolean isBackMode() {
         return backMode;
@@ -16,8 +17,6 @@ public class Model extends Observable {
     public void setBackMode(boolean backMode) {
         this.backMode = backMode;
     }
-
-    private boolean backMode;
 
     public Model(){
         //보드 생성

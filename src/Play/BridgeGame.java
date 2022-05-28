@@ -3,6 +3,7 @@ package Play;
 import Controller.CController;
 import Controller.Controller;
 import Model.Cells.Cell;
+import Model.Cells.EndCell;
 import Model.Cells.On;
 import Model.Cells.Passing;
 import Model.Model;
@@ -11,6 +12,7 @@ import Model.Die;
 import Model.Board;
 import Model.Piece;
 import View.View;
+import View.CLI;
 
 import java.util.ArrayList;
 
@@ -31,9 +33,12 @@ public class BridgeGame {
     private void init(){
         model = new Model();
         controller = new CController(model);
-        view = new View(model);
 
-        //플레이어 숫자 세팅
+        //뷰 선택
+        view = new CLI(model);
+        //setView();
+
+        //플레이어 세팅
         Player[] players = new Player[controller.input_playerNo()];
         for(int i=0; i<players.length; i++){
             players[i] = new Player(i);
@@ -41,10 +46,10 @@ public class BridgeGame {
         model.setPlayers(players);
 
         //말 START에 위치
-        Cell startCell = model.getBoard().getStartCell();
         for(int i=0; i< players.length; i++){
-            startCell.arrive(players[i].getPiece());
+            model.getBoard().getStartCell().arrive(players[i].getPiece());
         }
+        //setPiecesToStartCell()
 
         //맵출력
         view.print_map();
@@ -52,8 +57,9 @@ public class BridgeGame {
     }
 
     private void play(){
-        ArrayList<Player> activePlayers = new ArrayList<Player>();
+        ArrayList<Player> activePlayers;
         do {
+            activePlayers = new ArrayList<Player>();
             Player[] players = model.getPlayers();
             for (int i = 0; i < players.length; i++) {
                 if (!players[i].isEnd()) activePlayers.add(players[i]);
@@ -69,9 +75,11 @@ public class BridgeGame {
                     die.roll();
                     view.print_die(die.getFaceValue());
 
-                    int movableCnt = die.getFaceValue()-player.getBridgeCardCnt();
+                    int movableCnt = movableCnt(die.getFaceValue(), player.getBridgeCardCnt());
                     //2. 이동가능 횟수 출력
                     view.print_movableCnt(movableCnt);
+
+                    if(movableCnt==0) continue;
 
                     //3. 이동 경로 입력
                     Board board = model.getBoard();
@@ -95,7 +103,7 @@ public class BridgeGame {
                         }
 
                         if(cell instanceof Passing) ((Passing) cell).pass(piece);
-
+                        if(cell instanceof EndCell) break;
                     }
 
                     //5. 도착
@@ -109,7 +117,7 @@ public class BridgeGame {
                 }
 
                 view.print_map();
-                view.print_item(activePlayers);
+                view.print_item(model.getPlayers());
                 //플레이어의 아이템 개수 출력
 
             }
@@ -117,7 +125,13 @@ public class BridgeGame {
     }
 
     private void end(){
+        System.out.println("게임 종료");
+        view.print_score(model.getPlayers());
+    }
 
+    private int movableCnt(int dieNum, int BCNum){
+        if(dieNum - BCNum>=0) return dieNum-BCNum;
+        else return 0;
     }
 
     public static void main(String[] args) {

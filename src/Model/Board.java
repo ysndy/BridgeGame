@@ -154,7 +154,7 @@ public class Board {
 
     public Cell getRightCell(Cell cell){
         try {
-            System.out.println("y="+cell.getPosition().getY()+", x="+cell.getPosition().getX() + 1);
+            //System.out.println("y="+cell.getPosition().getY()+", x="+cell.getPosition().getX() + 1);
             return map[cell.getPosition().getY()][cell.getPosition().getX() + 1];
         }catch (ArrayIndexOutOfBoundsException e){
             return null;

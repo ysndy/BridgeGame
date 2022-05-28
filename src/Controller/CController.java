@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Cells.Cell;
+import Model.Cells.EndCell;
 import Model.Model;
 import Model.Board;
 
@@ -33,7 +34,7 @@ public class CController extends Controller{
     public boolean input_isMove(int number) {
 
         while(true){
-            System.out.println(number+"플레이어의 차례입니다.\n쉬실려면 'S', 계속하시려면 'G'를 눌러주세요");
+            System.out.println("플레이어"+number+"의 차례입니다.\n쉬실려면 'S', 계속하시려면 'G'를 눌러주세요");
 
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -97,6 +98,9 @@ public class CController extends Controller{
                 System.out.println("뒤로 이동 불가모드");
                 return false;
             }
+
+            //end셀일 경우
+            if(cell instanceof EndCell) return true;
 
             switch (c) {
                 case 'u':
