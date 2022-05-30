@@ -1,7 +1,3 @@
-package Model.Cells;
-
-import Model.Piece;
-
 public class EndCell extends Cell implements On, Passing {
 
     private int rank = 1;

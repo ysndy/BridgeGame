@@ -1,9 +1,3 @@
-package Model.Cells;
-
-import Model.Card;
-import Model.Piece;
-import Model.Player;
-
 public class ToolCell extends Cell implements On {
 
     Card card;

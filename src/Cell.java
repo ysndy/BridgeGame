@@ -1,9 +1,4 @@
-package Model.Cells;
-import Model.Piece;
-import Util.Position;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Cell {
 
@@ -27,11 +22,6 @@ public class Cell {
         this.backDirection = backDirection;
         this.type = type;
     }
-//
-//    public void pass(Piece piece){
-//
-//    }
-
     public void setPosition(Position position){
         this.position = position;
     }
@@ -50,6 +40,15 @@ public class Cell {
 
     public ArrayList<Piece> getPieces(){
         return pieces;
+    }
+
+    public boolean[] playerNumberOfPieces(){
+
+        boolean[] pn = new boolean[Data.PLAYER_MAX];
+        for(int i=0; i<pieces.size(); i++){
+            pn[pieces.get(i).getPlayer().getNumber()] = true;
+        }
+        return pn;
     }
 
 }

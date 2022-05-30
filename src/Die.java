@@ -1,5 +1,3 @@
-package Model;
-
 public class Die {
 
     private int faceValue;
