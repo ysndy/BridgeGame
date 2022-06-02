@@ -1,26 +1,20 @@
+package domain;
+
+import domain.object.Board;
+import domain.object.Player;
+
 import java.util.Observable;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Model extends Observable {
 
     private Board board;
     private Player[] players;
-    private boolean backMode;
+    public AtomicBoolean backMode;
     private Turn turn;
     private int state;
     private String helpMsg;
-
-    public String getWarningMsg() {
-        return warningMsg;
-    }
-
-    public void setWarningMsg(String warningMsg) {
-        this.warningMsg = warningMsg;
-        setChanged();
-        notifyObservers();
-    }
-
     private String warningMsg;
-
     public final static int STATE_INIT = 0;
     public final static int STATE_PLAY = 1;
     public final static int STATE_END = 2;
@@ -28,7 +22,7 @@ public class Model extends Observable {
     public Model() {
         //보드 생성
         board = new Board();
-        backMode = true;
+        backMode = new AtomicBoolean(false);
     }
 
     public class Turn {
@@ -75,10 +69,21 @@ public class Model extends Observable {
 
     }
 
+    public String getWarningMsg() {
+        return warningMsg;
+    }
+    public void setWarningMsg(String warningMsg) {
+        this.warningMsg = warningMsg;
+        setChanged();
+        notifyObservers();
+    }
+    public void setWarningMsgNull(){
+        warningMsg = null;
+    }
+
     public int getState() {
         return state;
     }
-
     public void setState(int state) {
         this.state = state;
     }
@@ -86,33 +91,25 @@ public class Model extends Observable {
     public String getHelpMsg() {
         return helpMsg;
     }
-
     public void setHelpMsg(String helpMsg) {
         this.helpMsg = helpMsg;
         setChanged();
         notifyObservers();
     }
-
     public void setHelpMsgNull(){
         helpMsg = null;
-    }
-
-    public void setWarningMsgNull(){
-        warningMsg = null;
     }
 
     public Turn getTurn() {
         return turn;
     }
-
     public void createTurn(Player player) {
         turn = new Turn(player);
     }
 
-    public boolean isBackMode() {
-        return backMode;
+    public Player[] getPlayers() {
+        return players;
     }
-
     public void setPlayers(int playerNumber) {
         players = new Player[playerNumber];
         for (int i = 0; i < playerNumber; i++) {
@@ -122,10 +119,6 @@ public class Model extends Observable {
 
     public Board getBoard() {
         return board;
-    }
-
-    public Player[] getPlayers() {
-        return players;
     }
 
     public void setPiecesToStartCell() {

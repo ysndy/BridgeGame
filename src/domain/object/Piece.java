@@ -1,3 +1,5 @@
+package domain.object;
+
 public class Piece {
     private Player player;
 

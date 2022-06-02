@@ -1,3 +1,5 @@
+package domain.object.cell;
+
 public class Position {
 
     int x, y;

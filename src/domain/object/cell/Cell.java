@@ -1,9 +1,17 @@
+package domain.object.cell;
+
+import domain.Data;
+import domain.object.Piece;
+
 import java.util.ArrayList;
+
+// 테스트할 것. 말이 정상적으로 도착하는지
 
 public class Cell {
 
     protected ArrayList<Piece> pieces;
     private Position position;
+    private int rank;
 
     public char getType() {
         return type;

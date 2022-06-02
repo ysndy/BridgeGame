@@ -1,6 +1,16 @@
+package domain.object.cell;
+
+import domain.object.Card;
+import domain.object.Piece;
+import domain.object.Player;
+
 public class ToolCell extends Cell implements On {
 
-    Card card;
+    public Card getCard() {
+        return card;
+    }
+
+    private Card card;
 
     public ToolCell(Card card, char backDirection, char type){
         super(backDirection, type);

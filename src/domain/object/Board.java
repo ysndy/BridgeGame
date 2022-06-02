@@ -1,3 +1,8 @@
+package domain.object;
+
+import domain.Data;
+import domain.object.cell.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -45,9 +50,9 @@ public class Board {
                         case 'C': cell = new DefaultCell(getBack(str), getType(str)); break;
                         case 'B': cell = new BridgeStartCell(getBack(str), getType(str)); break;
                         case 'b': cell = new BridgeEndCell(getBack(str), getType(str)); break;
-                        case 'H': cell = new ToolCell(new Card("Hammer", 2), getBack(str), getType(str)); break;
-                        case 'S': cell = new ToolCell(new Card("Saw", 3), getBack(str), getType(str)); break;
-                        case 'P': cell = new ToolCell(new Card("Philips Driver", 1), getBack(str), getType(str)); break;
+                        case 'H': cell = new ToolCell(new Card(Data.CARDNAME[1], 2), getBack(str), getType(str)); break;
+                        case 'S': cell = new ToolCell(new Card(Data.CARDNAME[2], 3), getBack(str), getType(str)); break;
+                        case 'P': cell = new ToolCell(new Card(Data.CARDNAME[0], 1), getBack(str), getType(str)); break;
                         case 'E': cell = new EndCell('.', getType(str)); break;
 
                     }
@@ -72,7 +77,7 @@ public class Board {
                     }
 
                     //System.out.println("y="+y+", x="+x);
-                    if(getType(str)=='B') board.get(y).add(new BridgeCell(getBack(str), getType(str)));
+                    if(getType(str)=='B') board.get(y).add(new BridgeCell('L', getType(str)));
                     switch (getNext(str)){
 
                         case 'U': y--; break;
@@ -217,7 +222,7 @@ public class Board {
             if (cell instanceof EndCell) break;
         }
 
-        //5. 도착
+        //도착
         cell.arrive(piece);
         if (cell instanceof On) ((On) cell).on(piece);
 

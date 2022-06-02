@@ -1,3 +1,5 @@
+package domain.object;
+
 public class Die {
 
     private int faceValue;
@@ -10,10 +12,4 @@ public class Die {
         return faceValue;
     }
 
-
-    public static void main(String[] args) {
-        Die die = new Die();
-        die.roll();
-        System.out.println(die.getFaceValue());
-    }
 }

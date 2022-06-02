@@ -1,3 +1,7 @@
+package domain.object.cell;
+
+import domain.object.Piece;
+
 public class BridgeCell extends Cell implements Passing {
 
     public BridgeCell(char backDirection, char type) {

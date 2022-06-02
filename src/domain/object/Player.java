@@ -1,3 +1,7 @@
+package domain.object;
+
+import domain.Data;
+
 public class Player {
     public int getNumber() {
         return number;
@@ -45,6 +49,7 @@ public class Player {
 
     public void setEnd(boolean end) {
         isEnd = end;
+
     }
 
     public void addScore(int score){

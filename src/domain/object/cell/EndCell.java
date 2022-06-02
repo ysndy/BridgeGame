@@ -1,11 +1,14 @@
-public class EndCell extends Cell implements On, Passing {
+package domain.object.cell;
 
-    private int rank = 1;
+import domain.object.Piece;
+
+public class EndCell extends Cell implements On, Passing {
 
     public EndCell(char backDirection, char type) {
         super(backDirection, type);
     }
 
+    private int rank=1;
     @Override
     public void on(Piece piece) {
         piece.getPlayer().setEnd(true);
@@ -13,18 +16,14 @@ public class EndCell extends Cell implements On, Passing {
         switch (rank++){
             case 1:
                 piece.getPlayer().addScore(7);
-                piece.getPlayer().setRank(1);
                 break;
             case 2:
                 piece.getPlayer().addScore(3);
-                piece.getPlayer().setRank(2);
                 break;
             case 3:
                 piece.getPlayer().addScore(1);
-                piece.getPlayer().setRank(3);
                 break;
             case 4:
-                piece.getPlayer().setRank(4);
                 break;
         }
 

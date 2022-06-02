@@ -1,3 +1,5 @@
+package domain.object;
+
 public class Card {
 
     private String name;
@@ -19,23 +21,11 @@ public class Card {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public int getCount() {
         return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 }

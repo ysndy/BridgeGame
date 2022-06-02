@@ -1,5 +1,14 @@
-import java.io.IOException;
+package ui;
+
+import domain.*;
+import domain.object.*;
+import domain.object.cell.Cell;
+import domain.object.cell.DefaultCell;
+import domain.object.cell.EndCell;
+import domain.object.cell.StartCell;
+
 import java.util.*;
+
 
 public class CLI extends View {
 
@@ -27,13 +36,13 @@ public class CLI extends View {
 
     public void print_turnInfo() {
         System.out.println("현재 차례: 플레이어" + model.getTurn().getPlayer().getNumber());
-        if(model.getTurn().getMovableCnt()!=null) System.out.println("이동 가능 횟수: " + model.getTurn().getMovableCnt());
+        if (model.getTurn().getMovableCnt() != null) System.out.println("이동 가능 횟수: " + model.getTurn().getMovableCnt());
     }
 
     public void print_score(Player[] players) {
 
         for (int i = 0; i < players.length; i++) {
-            System.out.println("플레이어" + players[i].getNumber() + "의 점수는 " + players[i].getScore() + "입니다.");
+            System.out.println("플레이어" + players[i].getNumber() + "의 점수는 " + players[i].getScore() + "입니다. 순위: "+players[i].getRank());
         }
 
     }
@@ -119,7 +128,7 @@ public class CLI extends View {
         for (int i = 0; i < buffer.length; i++) {
 
             for (int j = 0; j < buffer[i].length; j++) {
-                if(j%5==0) System.out.print(" ");
+                if (j % 5 == 0) System.out.print(" ");
                 System.out.print(buffer[i][j]);
             }
             System.out.println();
@@ -129,104 +138,54 @@ public class CLI extends View {
     }
 
     public void print_helpMsg() {
-        if(model.getHelpMsg()!=null) System.out.println("도움말: " + model.getHelpMsg());
+        if (model.getHelpMsg() != null) System.out.println("도움말: " + model.getHelpMsg());
         model.setHelpMsgNull();
     }
 
     public void print_warningMsg() {
-        if(model.getWarningMsg()!=null) System.out.println("경고: " + model.getWarningMsg());
+        if (model.getWarningMsg() != null) System.out.println("경고: " + model.getWarningMsg());
         model.setWarningMsgNull();
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        //초기화
-        System.out.println("\033[H\033[2J");
-        System.out.flush();
+    protected void print_init() {
+        //System.out.println("----------------------------------------------");
+    }
 
-        if (model.getState() == Model.STATE_INIT) {
-        } else if (model.getState() == Model.STATE_PLAY) {
-            print_map();
-            print_playerInfo(model.getPlayers());
-            print_turnInfo();
+    @Override
+    protected void print_end() {
+        System.out.println("----------------------------------------------");
+    }
 
-        } else if (model.getState() == Model.STATE_END) {
-            print_score(model.getPlayers());
-        }
-
-        print_helpMsg();
-        print_warningMsg();
+    @Override
+    public Integer input_playerNumber_logic() {
+        Integer input = scanner.nextInt();
+        return input;
 
     }
 
     @Override
-    public int input_playerNumber() {
-        while (true) {
-            try {
-                int input = scanner.nextInt();
-                if (input_playerNumber_check(input)) return input;
-                else throw new Exception();
-            } catch (Exception e) {
-                model.setWarningMsg("2~4 사이의 정수를 다시 입력해주세요");
-            }
-        }
-
+    public Character input_gameMode_logic() {
+        Character input = scanner.next().charAt(0);
+        return input;
     }
 
     @Override
-    public char input_gameMode() {
-        while (true) {
-            try {
-                char input = scanner.next().charAt(0);
-                if (input_gameMode_check(input)) return input;
-                else throw new Exception();
-            } catch (Exception e) {
-                model.setWarningMsg("G 또는 C를 다시 입력해주세요");
-            }
-        }
+    public Character input_turnMethod_logic() {
+        Character input = scanner.next().charAt(0);
+        return input;
     }
 
     @Override
-    public char input_turnMethod() {
-        while (true) {
-            try {
-                char input = scanner.next().charAt(0);
-                if (input_turnMethod_check(input)) return input;
-                else throw new Exception();
-            } catch (Exception e) {
-                model.setWarningMsg("G 또는 S를 다시 입력해주세요");
-            }
-        }
+    public String input_command_logic() {
+        String command = scanner.next();
+        return command.toUpperCase(Locale.ROOT);
     }
 
     @Override
-    public String input_command() {
-        while (true) {
-            try {
-                String command = scanner.next();
-                if (input_command_check(command)) return command.toUpperCase(Locale.ROOT);
-                else throw new IOException();
-
-            } catch (IOException e) {
-                model.setWarningMsg("올바른 명령어를 입력해주세요");
-            }
-        }
-    }
-
-    @Override
-    public int input_mapNumber(int mapNumber) {
-        while (true) {
-            try {
-                int input = scanner.nextInt();
-                if (input_mapNumber_check(input, mapNumber)) return input;
-                else throw new IOException();
-
-            } catch (IOException e) {
-                model.setWarningMsg("올바른 명령어를 입력해주세요");
-            }
-        }
-
-
+    public Integer input_mapNumber_logic(int mapNumber) {
+        Integer input = scanner.nextInt();
+        return input;
     }
 }
 
