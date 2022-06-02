@@ -4,8 +4,8 @@ import domain.object.Piece;
 
 public class EndCell extends Cell implements On, Passing {
 
-    public EndCell(char backDirection, char type) {
-        super(backDirection, type);
+    public EndCell(int rank, char type) {
+        super(rank, type);
     }
 
     private int rank=1;

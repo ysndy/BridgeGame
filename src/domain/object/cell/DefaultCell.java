@@ -1,7 +1,7 @@
 package domain.object.cell;
 
 public class DefaultCell extends Cell {
-    public DefaultCell(char backDirection, char type) {
-        super(backDirection, type);
+    public DefaultCell(int rank, char type) {
+        super(rank, type);
     }
 }

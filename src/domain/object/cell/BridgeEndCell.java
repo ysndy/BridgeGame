@@ -2,8 +2,8 @@ package domain.object.cell;
 
 public class BridgeEndCell extends Cell {
 
-    public BridgeEndCell(char backDirection, char type) {
-        super(backDirection, type);
+    public BridgeEndCell(int rank, char type) {
+        super(rank, type);
     }
 
 }

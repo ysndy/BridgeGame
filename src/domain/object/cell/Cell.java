@@ -11,6 +11,11 @@ public class Cell {
 
     protected ArrayList<Piece> pieces;
     private Position position;
+
+    public int getRank() {
+        return rank;
+    }
+
     private int rank;
 
     public char getType() {
@@ -19,15 +24,10 @@ public class Cell {
 
     private char type;
 
-    public char getBackDirection() {
-        return backDirection;
-    }
 
-    private char backDirection;
-
-    public Cell(char backDirection, char type){
+    public Cell(int rank, char type){
         pieces = new ArrayList<>();
-        this.backDirection = backDirection;
+        this.rank = rank;
         this.type = type;
     }
     public void setPosition(Position position){

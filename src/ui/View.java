@@ -95,7 +95,7 @@ public abstract class View implements Observer {
         //입력 값 맞는지 검사
         Character[] inputable = {'u', 'd', 'r', 'l', 'U', 'D', 'R', 'L'};
         ArrayList arrayList = new ArrayList(List.of(inputable));
-        Cell cell = model.getBoard().getPieceCell(model.getTurn().getPlayer().getPiece());
+        Cell cell_cur = model.getBoard().getPieceCell(model.getTurn().getPlayer().getPiece());
         if (command.length() != model.getTurn().getMovableCnt()) {
             throw new IOException("명령어 길이 불일치");
         }
@@ -107,37 +107,42 @@ public abstract class View implements Observer {
 
         //이동 가능한지 검사
         for (int i = 0; i < command.length(); i++) {
+            Cell cell_next = null;
             char c = command.charAt(i);
 
-            //뒤로 이동 불가모드일 경우
-            if (model.backMode.get() && (cell.getBackDirection() == c)) {
-                throw new IOException("뒤로 이동 불가모드");
-            }
-
             //end셀일 경우
-            if (cell instanceof EndCell) return;
+            if (cell_cur instanceof EndCell) return;
 
             switch (c) {
                 case 'u':
                 case 'U':
-                    cell = model.getBoard().getUpCell(cell);
+                    cell_next = model.getBoard().getUpCell(cell_cur);
                     break;
                 case 'd':
                 case 'D':
-                    cell = model.getBoard().getDownCell(cell);
+                    cell_next = model.getBoard().getDownCell(cell_cur);
                     break;
                 case 'l':
                 case 'L':
-                    cell = model.getBoard().getLeftCell(cell);
+                    cell_next = model.getBoard().getLeftCell(cell_cur);
                     break;
                 case 'r':
                 case 'R':
-                    cell = model.getBoard().getRightCell(cell);
+                    cell_next = model.getBoard().getRightCell(cell_cur);
                     break;
             }
-            if (cell == null) {
+
+            //뒤로 이동 불가모드일 경우
+            if (model.backMode.get() && (cell_next.getRank() < cell_cur.getRank())) {
+                throw new IOException("뒤로 이동 불가모드");
+            }
+
+
+            if (cell_next == null) {
                 throw new IOException("이동 가능 셀 없음");
             }
+
+            cell_cur = cell_next;
 
         }
 

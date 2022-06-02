@@ -4,8 +4,8 @@ import domain.object.Piece;
 
 public class BridgeCell extends Cell implements Passing {
 
-    public BridgeCell(char backDirection, char type) {
-        super(backDirection, type);
+    public BridgeCell(int rank, char type) {
+        super(rank, type);
     }
 
     @Override

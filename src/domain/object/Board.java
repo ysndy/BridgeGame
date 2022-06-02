@@ -28,9 +28,10 @@ public class Board {
                 ArrayList<ArrayList<Cell>> board = new ArrayList<>();
                 // 시작 셀
                 int x=0, y=0, x_max=0;
+                int rank = 0;
                 Cell cell = null;
                 board.add(new ArrayList<Cell>());
-                board.get(0).add(new StartCell('.', 'S'));
+                board.get(0).add(new StartCell(rank++, 'S'));
                 String startStr = scanner.nextLine();
 
                 switch (getNext(startStr)){
@@ -47,13 +48,13 @@ public class Board {
 
                     switch (getType(str)) {
 
-                        case 'C': cell = new DefaultCell(getBack(str), getType(str)); break;
-                        case 'B': cell = new BridgeStartCell(getBack(str), getType(str)); break;
-                        case 'b': cell = new BridgeEndCell(getBack(str), getType(str)); break;
-                        case 'H': cell = new ToolCell(new Card(Data.CARDNAME[1], 2), getBack(str), getType(str)); break;
-                        case 'S': cell = new ToolCell(new Card(Data.CARDNAME[2], 3), getBack(str), getType(str)); break;
-                        case 'P': cell = new ToolCell(new Card(Data.CARDNAME[0], 1), getBack(str), getType(str)); break;
-                        case 'E': cell = new EndCell('.', getType(str)); break;
+                        case 'C': cell = new DefaultCell(rank++, getType(str)); break;
+                        case 'B': cell = new BridgeStartCell(rank++, getType(str)); break;
+                        case 'b': cell = new BridgeEndCell(rank++, getType(str)); break;
+                        case 'H': cell = new ToolCell(new Card(Data.CARDNAME[1], 2), rank++, getType(str)); break;
+                        case 'S': cell = new ToolCell(new Card(Data.CARDNAME[2], 3), rank++, getType(str)); break;
+                        case 'P': cell = new ToolCell(new Card(Data.CARDNAME[0], 1), rank++, getType(str)); break;
+                        case 'E': cell = new EndCell(rank++, getType(str)); break;
 
                     }
 
@@ -77,7 +78,7 @@ public class Board {
                     }
 
                     //System.out.println("y="+y+", x="+x);
-                    if(getType(str)=='B') board.get(y).add(new BridgeCell('L', getType(str)));
+                    if(getType(str)=='B') board.get(y).add(new BridgeCell(rank++, getType(str)));
                     switch (getNext(str)){
 
                         case 'U': y--; break;

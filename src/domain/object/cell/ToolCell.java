@@ -12,8 +12,8 @@ public class ToolCell extends Cell implements On {
 
     private Card card;
 
-    public ToolCell(Card card, char backDirection, char type){
-        super(backDirection, type);
+    public ToolCell(Card card, int rank, char type){
+        super(rank, type);
         this.card = card;
     }
 
